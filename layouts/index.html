@@ -1,0 +1,86 @@
+{{ define "main" }}
+<main class="calculator">
+  <h1>Cloudflare startup cost tracker</h1>
+  <p class="intro">
+    Cloudflare for Startups offers early-stage companies up to $350,000 in
+    platform credits. This is an estimate of your Cloudflare bill and how
+    far a given tier's credit would cover it — not an official quote.
+  </p>
+  <p id="generated-at"></p>
+
+  <div class="tier-picker" role="radiogroup" aria-label="Startup tier">
+    <label class="tier-card">
+      <input type="radio" name="tier" value="tier3" checked>
+      <span class="tier-name">Tier 3</span>
+      <span class="tier-price">$10k</span>
+      <p class="tier-desc">Get started with $10k in credits to build and launch your product, no minimum funding required.</p>
+      <p class="tier-heading">Criteria</p>
+      <ul>
+        <li>Bootstrapped or self-funded</li>
+        <li>Under $1M raised</li>
+      </ul>
+      <p class="tier-heading">Benefits</p>
+      <ul>
+        <li>Credits: $10k</li>
+        <li>Community &amp; events</li>
+        <li>Developer docs and Discord community</li>
+      </ul>
+    </label>
+    <label class="tier-card">
+      <input type="radio" name="tier" value="tier2">
+      <span class="tier-name">Tier 2</span>
+      <span class="tier-price">$100k</span>
+      <p class="tier-desc">Access expanded $100k in credits, an account manager, and technical sessions with Cloudflare experts.</p>
+      <p class="tier-heading">Criteria</p>
+      <ul>
+        <li>Under $5M raised</li>
+        <li>Funded by an affiliated partner</li>
+      </ul>
+      <p class="tier-heading">Benefits</p>
+      <ul>
+        <li>Credits: $100k</li>
+        <li>Account manager (case-dependent)</li>
+        <li>Technical sessions with Cloudflare experts</li>
+        <li>Community &amp; events</li>
+      </ul>
+    </label>
+    <label class="tier-card">
+      <input type="radio" name="tier" value="tier1">
+      <span class="tier-name">Tier 1</span>
+      <span class="tier-price">$350k</span>
+      <p class="tier-desc">Unlock $350k maximum credits, Office Hours with experts, and priority technical support to scale globally.</p>
+      <p class="tier-heading">Criteria</p>
+      <ul>
+        <li>$5M+ raised</li>
+        <li>Funded by an affiliated partner</li>
+      </ul>
+      <p class="tier-heading">Benefits</p>
+      <ul>
+        <li>Credits: $350k</li>
+        <li>Account manager</li>
+        <li>Priority technical support</li>
+        <li>Bi-weekly Solutions Architect office hours</li>
+        <li>Community &amp; events</li>
+      </ul>
+    </label>
+  </div>
+
+  <div class="layout">
+    <div id="product-cards" class="product-cards"></div>
+
+    <aside class="summary">
+      <div class="summary-row"><span>Total cost</span><strong id="total-cost">$0.00</strong></div>
+      <div class="summary-row"><span>Credit applied</span><strong id="total-credit">$0.00</strong></div>
+      <div class="summary-row net"><span>Net cost</span><strong id="net-cost">$0.00</strong></div>
+      <div class="summary-row"><span>% of annual credit used</span><strong id="pct-used">0%</strong></div>
+      <button id="reset-usage" type="button">Reset usage</button>
+    </aside>
+  </div>
+</main>
+
+{{- with readFile "data/tiers.json" -}}
+<script id="tiers-data" type="application/json">{{ . | safeJS }}</script>
+{{- end -}}
+{{- $jsHash := sha1 (readFile "static/js/calculator.js") -}}
+<script type="module" src="{{ printf "js/calculator.js?v=%s" $jsHash | relURL }}"></script>
+{{ end }}

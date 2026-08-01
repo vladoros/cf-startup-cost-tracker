@@ -1,0 +1,20 @@
+.env
+.DS_Store
+public/
+.hugo_build.lock
+data/tiers.json
+
+# AI tooling + planning docs
+.claude/
+.superpowers/
+.cursor/
+.aider*
+CLAUDE.md
+SKILL.md
+plan.md
+docs/
+
+# Account-sensitive: deploy runbook, worker code, local tooling
+deploy.md
+worker/
+preview.sh
